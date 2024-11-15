@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# Route API requests to specific PHP scripts
+RewriteCond %{REQUEST_URI} ^/api/upload/?$ [NC]
+RewriteRule ^ api/upload.php [L]
+
+RewriteCond %{REQUEST_URI} ^/api/media/?$ [NC]
+RewriteRule ^ api/media.php [L]
+
+RewriteCond %{REQUEST_URI} ^/api/files/.*$ [NC]
+RewriteRule ^ api/files.php [L]
+
+RewriteCond %{REQUEST_URI} ^/api/delete/\d+/?$ [NC]
+RewriteRule ^ api/delete.php [L]
+
+# Serve static files directly if they exist
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Redirect all other requests to index.html (React app entry point)
+RewriteRule ^ index.html [L]
