@@ -40,12 +40,15 @@ const FileUpload = () => {
     });
     
       return (
-        <main className='p-8'>
+        <main className='pt-20 mt-20'>
           <div
             {...getRootProps()}
-            className={`border-2 border-dashed p-8 rounded-lg text-center cursor-pointer
+            className={`border-2 border-dashed relative px-8 pb-8 pt-20 rounded-lg text-center cursor-pointer
               ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
           >
+            <div className="page-img">
+              <img src="SN.jpeg" alt="Nadia and Stallone" className="" />
+            </div>
             <input {...getInputProps()} />
             {uploading ? (
               <p>Uploading...</p>
@@ -58,14 +61,14 @@ const FileUpload = () => {
             <p className="text-sm text-red-500">Due to limited resources there is a limit of 50 files per upload.</p>
           </div>
     
-          <div className="mt-8">
-            <Link to="/gallery" className="bg-blue-500 text-white px-4 py-2 rounded-md">
+          {/* <div className="mt-8 text-center">
+            <Link to="/gallery" className="bg-lavander text-lavander px-4 py-2 rounded-md">
               View Media
             </Link>
-          </div>
+          </div> */}
     
           {uploadedFiles.length > 0 && (
-            <div className="mt-8 grid grid-cols-3 gap-4">
+            <div className="mt-8 grid grid-cols-3 gap-4 photo-grid">
               {uploadedFiles.map((file, index) => (
                 <div key={`${file.url}-${index}`} className="relative aspect-square">
                   {file.type.includes('image') ? (

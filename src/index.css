@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.uploader-bg {
+  background: url("../public/lavander-bg4.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  z-index: 1;
+  position: relative;
+} 
+
+.bg-lavander {
+  background: rgb(217, 53, 240);
+  background: linear-gradient(160deg, #b793ff 23%, rgba(253, 213, 239, 1) 43%, rgba(242, 203, 234, 1) 59%, rgba(216, 180, 221, 1) 78%);
+} 
+
+.text-lavander {
+  color: rgb(88 61 136)
+}
+
+.page-img {
+  position: absolute;
+    height: 130px;
+    width: 130px;
+    overflow: hidden;
+    top: -62px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    border-radius: 100%;
+}
+
+.photo-grid {
+  background: black;
+  padding: 10px;
+  border-radius: 4px;
+}
