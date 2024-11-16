@@ -1,8 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Gallery } from "react-grid-gallery";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-import axios from 'axios';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
 import { getFiles } from '../api/apiService';
@@ -12,6 +11,8 @@ export default function GalleryPage() {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [visibleItems, setVisibleItems] = useState(new Set());
+  const observerRef = useRef(null);
 
   // Calculate current, next, and prev media items
   const currentMedia = mediaFiles[index];
@@ -55,6 +56,29 @@ export default function GalleryPage() {
     };
   }, [fetchMediaFiles]);
 
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setVisibleItems((prev) => {
+            const next = new Set(prev);
+            if (entry.isIntersecting) {
+              next.add(entry.target.dataset.index);
+            }
+            return next;
+          });
+        });
+      },
+      { rootMargin: '50px' }
+    );
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
   const handleClick = useCallback((index) => setIndex(index), []);
   const handleClose = useCallback(() => setIndex(-1), []);
   const handleMovePrev = useCallback(() => setIndex(prevIndex), [prevIndex]);
@@ -76,22 +100,32 @@ export default function GalleryPage() {
         enableImageSelection={false}
         rowHeight={320}
         margin={4}
-        thumbnailImageComponent={({ item }) => (
-          item.isVideo ? (
-            <video
-              src={item.src}
-              className="w-full h-full object-cover"
-              controls
-              width={400}
-              height={220}
-            />
-          ) : (
-            <img
-              alt={item.caption}
-              src={item.src}
-              className="w-full h-full object-cover"
-            />
-          )
+        thumbnailImageComponent={({ item, index }) => (
+          <div data-index={index} ref={(el) => {
+            if (el && observerRef.current) {
+              observerRef.current.observe(el);
+            }
+          }}>
+            {visibleItems.has(index.toString()) && (
+              item.isVideo ? (
+                <video
+                  src={item.src}
+                  className="w-full h-full object-cover"
+                  controls
+                  width={400}
+                  height={220}
+                  loading="lazy"
+                />
+              ) : (
+                <img
+                  alt={item.caption}
+                  src={item.src}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              )
+            )}
+          </div>
         )}
       />
 
@@ -124,6 +158,7 @@ export default function GalleryPage() {
               controls
               className="w-full"
               autoPlay
+              loading="lazy"
             />
           </div>
         </div>
