@@ -55,7 +55,7 @@ const FileUpload = () => {
             ) : isDragActive ? (
               <p>Drop the files here...</p>
             ) : (
-              <p>Drag 'n' drop some files here, or click to select files</p>
+              <p>Click here to upload the files.</p>
             )}
     
             <p className="text-sm text-red-500">Due to limited resources there is a limit of 50 files per upload.</p>
@@ -68,7 +68,7 @@ const FileUpload = () => {
           </div> */}
     
           {uploadedFiles.length > 0 && (
-            <div className="mt-8 grid grid-cols-3 gap-4 photo-grid">
+            <div className="mt-8 grid grid-cols-3 gap-4 photo-grid photo-grid-bg">
               {uploadedFiles.map((file, index) => (
                 <div key={`${file.url}-${index}`} className="relative aspect-square">
                   {file.type.includes('image') ? (

@@ -69,7 +69,7 @@ export default function GalleryPage() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 mt-20 photo-grid-bg">
       <Gallery
         images={mediaFiles}
         onClick={handleClick}

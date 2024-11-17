@@ -4,7 +4,7 @@
 
 
 .uploader-bg {
-  background: url("../public/lavander-bg4.jpg");
+  background: url("../public/lavander-bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -36,7 +36,12 @@
 }
 
 .photo-grid {
-  background: black;
   padding: 10px;
   border-radius: 4px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.photo-grid-bg {
+  background: rgba(185, 185, 185, 0.5);
 }
