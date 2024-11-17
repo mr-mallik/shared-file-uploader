@@ -98,7 +98,7 @@ export default function GalleryPage() {
         images={mediaFiles}
         onClick={handleClick}
         enableImageSelection={false}
-        rowHeight={320}
+        rowHeight={100}
         margin={4}
         thumbnailImageComponent={({ item, index }) => (
           <div data-index={index} ref={(el) => {
